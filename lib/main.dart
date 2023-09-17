@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttering_pt6/pages/fakerDart.dart';
+import 'pages/Introduction_Page.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: fakerDart(),
+      home: introduction_page(),
     );
   }
 }
