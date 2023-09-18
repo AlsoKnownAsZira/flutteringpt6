@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,36 @@ class fakerDart extends StatefulWidget {
 
 class _fakerDartState extends State<fakerDart> {
   var faker = new Faker();
-
+  List<Map<String, dynamic>> dataList = [
+    {
+      "country": "USA",
+      "id": 1,
+    },
+    {
+      "country": "UK",
+      "id": 2,
+    },
+    {
+      "country": "INDONESIA",
+      "id": 3,
+    },
+    {
+      "country": "JAPAN",
+      "id": 4,
+    },
+    {
+      "country": "South Korea",
+      "id": 5,
+    },
+    {
+      "country": "India",
+      "id": 6,
+    },
+    {
+      "country": "Italy",
+      "id": 7,
+    },
+  ];
   int currentIndex = 0;
 
   @override
@@ -31,11 +61,10 @@ class _fakerDartState extends State<fakerDart> {
         ),
       ),
       Center(
-          child:
-          Column(
-            children: [
-                  Text("This period's winner is:"),
-               AvatarGlow(
+          child: Column(
+        children: [
+          Text("This period's winner is:"),
+          AvatarGlow(
               child: Material(
                 shape: CircleBorder(),
                 child: CircleAvatar(
@@ -47,15 +76,49 @@ class _fakerDartState extends State<fakerDart> {
               ),
               glowColor: Colors.lightBlueAccent,
               endRadius: 150),
-            Text(faker.person.name()),
-            ],
-          )
+          Text(faker.person.name()),
+        ],
+      )),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DropdownSearch<String>(
+          popupProps: PopupProps.menu(
+            showSelectedItems: true,
+            showSearchBox: true,
+            disabledItemFn: (String s) => s.startsWith('I') && s.endsWith('a'),
           ),
-      Center(
-        child: Text("Menu 3"),
+          items: [
+            'USA',
+            'UK',
+            'Indonesia',
+            'China',
+            'Japan',
+            'South Korea',
+            'India',
+            'Italy',
+          ],
+          onChanged: (value) => print("USER is from: ${value??null}"),
+          selectedItem: 'USA',
+          clearButtonProps: ClearButtonProps(isVisible: true),
+        ),
       ),
-      Center(
-        child: Text("Menu 4"),
+      DropdownSearch<Map<String, dynamic>>(
+        popupProps: PopupProps.menu(
+          showSearchBox: true,
+          disabledItemFn: (Map<String, dynamic> s) =>
+              s['id'] == 3 || s['country'] == 'India',
+        ),
+        items: dataList,
+        onChanged: (value) => print("USER is from: ${value?['country']}"),
+        selectedItem: {
+          "country": "USA",
+          "id": 1,
+        },
+
+        dropdownBuilder: (context, selectedItem) => ListTile(
+          textColor: Colors.red,
+          title: Text(selectedItem?["country"]),
+        ),
       ),
       Center(
         child: Text("Menu 5"),
@@ -69,10 +132,10 @@ class _fakerDartState extends State<fakerDart> {
       body: widgetList[currentIndex],
       bottomNavigationBar: ConvexAppBar(
         items: [
-          TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.map, title: 'Discovery'),
-          TabItem(icon: Icons.add, title: 'Add'),
-          TabItem(icon: Icons.message, title: 'Message'),
+          TabItem(icon: Icons.home, title: 'Faker+Intl'),
+          TabItem(icon: Icons.map, title: 'AvatarGlow'),
+          TabItem(icon: Icons.add, title: 'DDS singleList'),
+          TabItem(icon: Icons.message, title: 'DDS mapping '),
           TabItem(icon: Icons.people, title: 'Profile'),
         ],
         style: TabStyle.textIn,

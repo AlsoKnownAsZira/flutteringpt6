@@ -31,7 +31,6 @@ class introduction_page extends StatelessWidget {
           ),
         )
       ],
-     showNextButton: true,
      showBackButton: true,
      back: Text("Back"),
       next: Text("NEXT"),
